@@ -2,6 +2,11 @@
 Most important built-in functions
 """
 from functools import reduce
+import sys
+
+# for max and min
+sys.maxsize  # 9223372036854775807
+sys.minsize  # -9223372036854775808
 
 len('abc')  # 3
 len([1, 2, 3])  # 3

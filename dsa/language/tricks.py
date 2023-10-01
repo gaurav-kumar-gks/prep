@@ -61,7 +61,7 @@ max(set(l), key=l.count)  # 1
 
 # Ascii conversions
 print(ord('a'))  # 97
-print(chr(97)) # a
+print(chr(97))  # a
 
 # Random numbers
 import random
@@ -110,4 +110,3 @@ print("%s %s" % (a, b))  # abc def
 print(a, b)  # abc def
 print(a, b, sep='@')  # abc@def
 print(a, b, sep='@', end=',')  # abc@def,
-
