@@ -6,7 +6,6 @@ import sys
 
 # for max and min
 sys.maxsize  # 9223372036854775807
-sys.minsize  # -9223372036854775808
 
 len('abc')  # 3
 len([1, 2, 3])  # 3
@@ -23,7 +22,6 @@ min('abc')  # 'a'
 sum([1, 2, 3])  # 6
 sum([1, 2, 3], 10)  # 16
 sum({1, 2, 3})  # 6
-sum('abc')  # 'abc'
 
 sorted([3, 2, 1])  # [1, 2, 3]
 sorted([3, 2, 1], reverse=True)  # [3, 2, 1]

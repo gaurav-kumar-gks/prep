@@ -9,6 +9,7 @@ l2 = list([1, 2, 3])
 l3 = list((1, 2, 3))
 l4 = list(range(1, 4))
 l5 = list("abc")
+l6 = list()
 
 # important methods of list
 l1.append(1)  # append an element to the end of the list
@@ -78,7 +79,7 @@ s6.copy()  # returns a shallow copy of the set
 s6.union([4, 5, 6])  # s6 | {4, 5, 6}
 s6.intersection([1, 2, 3])  # s6 & {1, 2, 3}
 s6.difference([1, 2, 3])  # s6 - {1, 2, 3}
-s6.symmetric_difference([1, 2, 3])  # s6 ^ {1, 2, 3}
+# s6.symmetric_difference([1, 2, 3])  # s6 ^ {1, 2, 3}
 s6.issubset([1, 2, 3])  # s6 <= {1, 2, 3}
 s6.issuperset([1, 2, 3])  # s6 >= {1, 2, 3}
 s6.isdisjoint([1, 2, 3])  # s6.isdisjoint({1, 2, 3})

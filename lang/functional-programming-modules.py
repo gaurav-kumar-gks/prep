@@ -17,9 +17,20 @@ accumulate([1, 2, 3, 4, 5], max)  # 1, 2, 3, 4, 5
 accumulate([1, 2, 3, 4, 5], min)  # 1, 1, 1, 1, 1
 accumulate([1, 2, 3, 4, 5], lambda res, item: res * item)  # 1, 2, 6, 24, 120
 
+# batched 
+# >= python 3.12
+list(batched([1, 2, 3, 4, 5, 6, 7, 8, 9], 3))  # [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
+
 # chain(*iterables)
 list(chain('abc', 'def'))  # ['a', 'b', 'c', 'd', 'e', 'f']
 print(list(chain.from_iterable(['abc', 'def'])))  # ['a', 'b', 'c', 'd', 'e', 'f']
+
+# dropwhile(predicate, iterable)  # drop elements while predicate is true
+list(dropwhile(lambda x: x < 5, [1, 4, 6, 4, 1]))  # [6, 4, 1]
+
+# filterfalse(predicate, iterable)  # opposite of filter
+list(filterfalse(lambda x: x % 2, range(10)))  # [0, 2, 4, 6, 8]
+
 
 product('ABCD', 'xy')  # Ax Ay Bx By Cx Cy Dx Dy
 product(range(2), repeat=3)  # 000 001 010 011 100 101 110 111

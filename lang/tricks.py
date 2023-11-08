@@ -1,5 +1,7 @@
 import pprint
 
+p is q # True if p and q are the same object (identical)
+
 """
 List comprehension 
 """

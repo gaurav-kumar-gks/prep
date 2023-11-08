@@ -33,6 +33,71 @@ this is very important, if we don't have a base condition, the recursion will go
 4. return value: return the value from the recursion function
 """
 
+"""
+Head recursion:
+
+Head recursion is a type of recursion where the recursive call is the first statement in the function. 
+In other words, the function performs some operations before making the recursive call.
+
+In head recursion, the recursive call is made first and the computation is done after the recursive call. 
+This means that the function needs to keep track of the intermediate results for each recursive call, 
+which can lead to higher memory usage
+
+
+def head_recursive(n):
+    if n == 0:
+        return
+    head_recursive(n-1)
+    print(n)
+    
+head_recursive(5)
+    head_recursive(4)
+        head_recursive(3)
+            head_recursive(2)
+                head_recursive(1)
+                    head_recursive(0)
+                    print(1)
+                print(2)
+            print(3)
+        print(4)
+    print(5)
+
+"""
+
+"""
+Tail recursion:
+
+Tail recursion is a type of recursion where the recursive call is the last operation in the function. 
+This means that all the computations are done before the recursive call and the result of the recursive call is returned directly.
+
+In tail recursion, the computation is done before the recursive call and the result of the recursive call is returned directly. 
+This means that the function does not need to keep track of the intermediate results, 
+which can lead to lower memory usage. 
+
+In some programming languages, tail recursion can be optimized by the compiler, making it more efficient than head recursion.
+In Python, tail recursion is not optimized by the compiler.
+
+
+def tail_recursive(n, accumulator=1):
+    if n == 0:
+        return accumulator
+    else:
+        return tail_recursive(n-1, n * accumulator)
+        
+
+tail_recursive(5, 1)
+    tail_recursive(4, 5)
+        tail_recursive(3, 20)
+            tail_recursive(2, 60)
+                tail_recursive(1, 120)
+                    tail_recursive(0, 120)
+                    return 120
+                return 120
+            return 120
+        return 120
+    return 120
+"""
+
 
 """
 Factorial of a number is the product of all the integers from 1 to that number.
@@ -41,12 +106,6 @@ e.g.
 5! = 5 * 4 * 3 * 2 * 1 = 120
 4! = 4 * 3 * 2 * 1 = 24
 
-if you notice then 5! is nothing but 5*4!, 4! is nothing but 4*3!, 3! is nothing but 3*2!, 2! is nothing but 2*1!
-
-so we know that if we have some fn. factorial(n) then factorial(n) = n*factorial(n-1)
-
-now that we have this 
-let's see how we can calculate factorial of 5
 factorial(5) = 5*factorial(4) = 5*4*factorial(3) = 5*4*3*factorial(2) = 5*4*3*2*factorial(1) = 5*4*3*2*1*factorial(0) = 5*4*3*2*1*1 = 120
 
 Recursion tree would look like -> 
