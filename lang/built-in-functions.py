@@ -1,6 +1,7 @@
 """
 Most important built-in functions
 """
+import bisect
 from functools import reduce
 import sys
 
@@ -102,3 +103,9 @@ isinstance(10, int)  # True
 isinstance(10, float)  # False
 issubclass(int, int)  # True
 issubclass(int, float)  # False
+
+
+sorted_list = [1, 3, 5, 7, 9]
+target = 4
+
+insertion_point = bisect.bisect_left(sorted_list, target)

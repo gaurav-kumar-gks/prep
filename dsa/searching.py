@@ -15,14 +15,23 @@ Check the bounds to find l & r
 e.g. in binary search in ans first try to find what could be the min & max ans -> that'll give the l and r
 
 Finding mid:
-mid = (l + r) / 2 -> this may overflow
-mid = l + (r - l) // 2 -> this is lower mid
-mid = low + (high - low + 1) // 2 -> this is upper mid
+mid = (l + r) / 2 -> this may overflow in c / cpp etc. 
+mid = (low + high) // 2 -> this is lower mid
+mid = (low + high + 1) // 2 -> this is upper mid
 mid = (low + high) >> 2
 
 note: choice of mid & shrinking logic has to work together 
 s.t. the search space is reduced by half and 1 element is always excluded
 also, always check the case of <=3 elements
+i.e.
+a b c
+a b
+a
+with the while loop condition and the shrinking logic
+
+also always check
+if using lower mid -> then what if l == mid
+if using higher mid -> then what if r == mid
 """
 
 
@@ -45,6 +54,52 @@ def binary_search(l, r):
     # here return l or l-1 depending on the question
     return l
 
+"""
+Lower bound: The lower bound algorithm finds the first or the smallest index in a sorted array where the value at that index is greater than or equal to a given key i.e. x
+"""
+def find_first_pos(nums, t):
+    """
+    it returns the first position of the target element in non decreasing array
+    
+    e.g. 
+    nums = [1, 2, 2, 3, 4, 5] and t = 2
+    then it should return 1
+    if t = 6 then it should return -1
+    """
+    if not nums:
+        return -1
+    l, r = 0, len(nums) - 1
+    while l < r:
+        m = (l + r) // 2
+        if nums[m] >= t:
+            r = m
+        else:
+            l = m + 1
+    return r if nums[r] == t else -1
+    
+
+"""
+Upper bound: The upper bound algorithm finds the last or the largest index in a sorted array where the value at that index is less than or equal to a given key i.e. x
+"""
+def find_last_pos(nums, t):
+    """
+    it returns the last position of the target element in non decreasing array
+    
+    e.g. 
+    nums = [1, 2, 2, 3, 4, 5] and t = 2
+    then it should return 2
+    if t = 6 then it should return -1
+    """
+    if not nums:
+        return -1
+    l, r = 0, len(nums) - 1
+    while l < r:
+        m = (l + r + 1) // 2
+        if nums[m] <= t:
+            l = m
+        else:
+            r = m - 1
+    return l if nums[l] == t else -1
 
 def binary_search_on_floats(l, r):
     """
@@ -90,3 +145,4 @@ def ternary_search(f, l, r):
             r = m2
     # return what's needed - maybe an index or maybe the value of the function at the given index
     return l
+

@@ -1,5 +1,7 @@
 import pprint
 
+p = set()
+q = {}
 p is q # True if p and q are the same object (identical)
 
 """
@@ -90,6 +92,10 @@ print(list(reversed(l)))  # [5, 4, 3, 2, 1]
 # Multiplying strings
 print("abc" * 3)  # abcabcabc
 
+# Replacing the list w/o creating a new object
+nums = [1, 2, 3, 4, 5]
+k = 2
+nums[:] = nums[-k:] + nums[:-k]
 
 # Big number readability
 # x = 1_000_000  # 1000000
