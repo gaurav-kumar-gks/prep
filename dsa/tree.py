@@ -189,3 +189,21 @@ class TreeNode:
             self.right.level_order_traversal(result, level + 1)
         return result
 
+    def morris_traversal(self):
+        res = []
+        while self:
+            if not self.left:
+                res.append(self.val)
+                self = self.right
+            else:
+                # find the inorder predecessor of the current node
+                pre = self.left
+                while pre and pre.right != self:
+                    pre = pre.right
+                if not pre.right:
+                    pre.right = self
+                    self = self.left
+                else:
+                    pre.right = None
+                    res.append(self.val)
+                    self = self.right

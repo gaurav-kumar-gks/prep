@@ -69,3 +69,5 @@ Mapping types
 Mapping object maps hashable values to arbitrary objects.
 Values that are not hashable, that is, values containing lists, dictionaries or other mutable types (that are compared by value rather than by object identity) may not be used as keys.
 """
+
+# For time complexities https://ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt
