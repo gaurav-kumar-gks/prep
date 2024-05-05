@@ -18,8 +18,8 @@ No, if either of these conditions is fulfilled: ->
 Characteristics of problem that can be solved by two-pointer pattern:
 
 note: the key here is the sub-problem that we are considering, according to that the below two statements may vary
-If a wider scope of the sliding window is valid, the narrower scope of that wider scope is valid mush hold.
-If a narrower scope of the sliding window is invalid, the wider scope of that narrower scope is invalid mush hold.
+If a wider scope of the sliding window is valid, the narrower scope of that wider scope is valid must hold.
+If a narrower scope of the sliding window is invalid, the wider scope of that narrower scope is invalid must hold.
 
 """
 
