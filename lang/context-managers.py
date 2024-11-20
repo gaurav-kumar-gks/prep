@@ -22,3 +22,17 @@ class FileManager:
 # Usage:
 with FileManager('example.txt', 'w') as file:
     file.write('Hello, world!')
+    
+    
+class MyClass:
+    def on_enter(self):
+        print("on_enter called from __enter__")
+    
+    def on_exit(self, exc_type, exc_value, traceback):
+        print("on_exit called from __exit__")
+
+    __enter__ = on_enter  # Method aliasing
+    __exit__ = on_exit
+
+with MyClass() as obj:
+    pass

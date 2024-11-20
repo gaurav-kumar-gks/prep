@@ -71,3 +71,24 @@ Values that are not hashable, that is, values containing lists, dictionaries or 
 """
 
 # For time complexities https://ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt
+
+
+"""
+Object interning
+
+optimization technique used to improve performance and memory efficiency by reusing immutable objects
+
+
+1. Python caches small integers and strings
+2. Python caches empty immutable objects
+3. Python caches singletons
+
+a = 100
+b = 100
+c = 1000
+d = 1000
+print(a is b)  # Output: True
+print(c is d)  # Output: False
+
+manual interning can be done using sys.intern()
+"""

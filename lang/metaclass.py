@@ -1,84 +1,56 @@
 """
-Metaclass is a class of a class.
+Metaclass are classes that create classes. 
+They provide a powerful mechanism for customizing class creation and behavior
 """
 
 
-class ModelMeta(type):
-    """
-    ModelMeta is a metaclass for Model.
-    """
+class ValidateClass(type):
+    def __new__(mcs, name, bases, attrs):
+        if not 'required_method' in attrs:
+            raise TypeError('Subclass must implement required_method')
+        return super().__new__(mcs, name, bases, attrs)
 
-    def __new__(cls, name, bases, attrs):
-        print(f"ModelMeta.__new__ called for class '{name}'")
-        fields = {
-            name: value for name, value in attrs.items() if isinstance(value, Field)
-        }
-        attrs["_fields"] = fields
-        return super().__new__(cls, name, bases, attrs)
+class BaseClass(metaclass=ValidateClass):
+    def required_method(self):
+        pass
 
+class Subclass(BaseClass):
+    def required_method(self):
+        pass
+    
+class AutoProperty(type):
+    def __new__(mcs, name, bases, attrs):
+        new_attrs = {}
+        for key, value in attrs.items():                
+            # Check if the key is not a special attribute and the value is a string starting with '_'
+            if not key.startswith('__') and isinstance(value, str) and key.startswith('_'):
+                new_attrs[key[1:]] = property(fget=lambda self, key=key: getattr(self, key))
+            else:
+                new_attrs[key] = value
+        return super().__new__(mcs, name, bases, new_attrs)
 
-class Field:
-    def __init__(self, data_type):
-        self.data_type = data_type
-        print(f"Field.__init__ called for '{self.__class__.__name__}'")
+class MyAutoProClass(metaclass=AutoProperty):
+    _x = 10
+    _y = 20
+    _z = "_abc"
 
-    def __call__(self):
-        print(f"Field.__call__ called for '{self.__class__.__name__}'")
+class LoggingMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        cls = super().__new__(mcs, name, bases, attrs)
+        print(f"Creating class {name} with bases {bases} and attrs {attrs}")
+        for name, value in attrs.items():
+            if callable(value):
+                def wrapper(*args, **kwargs):
+                    print(f"Calling {name}")
+                    x = value(*args, **kwargs)
+                    print(f"Finished calling {name}")
+                    return x
+                setattr(cls, name, wrapper)
+        return cls
 
+class MyClass(metaclass=LoggingMeta):
+    def my_method(self):
+        print("Hello from my_method")
 
-class IntegerField(Field):
-    def __init__(self):
-        super().__init__("int")
-        print(f"IntegerField.__init__ called")
-
-    def __call__(self):
-        print(f"IntegerField.__call__ called")
-
-
-class CharField(Field):
-    def __init__(self, max_length):
-        super().__init__("str")
-        self.max_length = max_length
-        print(f"CharField.__init__ called with max_length={max_length}")
-
-    def __call__(self):
-        print(f"CharField.__call__ called")
-
-
-class Model(metaclass=ModelMeta):
-    def __new__(cls, *args, **kwargs):
-        print(f"Model.__new__ called for class '{cls.__name__}'")
-        instance = super().__new__(cls)
-        return instance
-
-    def __init__(self, **kwargs):
-        print(f"Model.__init__ called for class '{self.__class__.__name__}'")
-        for name, value in kwargs.items():
-            setattr(self, name, value)
-
-    def __call__(self, *args, **kwargs):
-        print(f"Model.__call__ called for class '{self.__class__.__name__}'")
-
-
-class Person(Model):
-    age = IntegerField()
-    name = CharField(max_length=20)
-
-    def __new__(cls, *args, **kwargs):
-        print("Person.__new__ called")
-        instance = super().__new__(cls)
-        return instance
-
-    def __init__(self, **kwargs):
-        print("Person.__init__ called")
-        super().__init__(**kwargs)
-
-    def __call__(self, *args, **kwargs):
-        print("Person.__call__ called")
-
-
-# name_field = CharField(max_length=100)
-# age_field = IntegerField()
-
-person = Person(name="Alice", age=30)
-person()
+if __name__ == "__main__":
+    x = MyAutoProClass()
