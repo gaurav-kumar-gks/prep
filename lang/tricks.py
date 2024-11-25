@@ -72,6 +72,7 @@ import random
 random.randint(1, 10)  # 1 <= x <= 10
 random.randrange(0, 50, 8) # 0 <= x < 50, step = 8
 random.random()  # 0 <= x < 1
+random.choice([1, 2, 3, 4, 5])  # 1, 2, 3, 4, 5
 
 # Swapping
 a = 10
@@ -86,7 +87,6 @@ print(l[-2])  # 4
 # Reversing a list
 l = [1, 2, 3, 4, 5]
 print(l[::-1])  # [5, 4, 3, 2, 1]
-print(reversed(l))  # <list_reverseiterator object at 0x7f9b7c2c8e60>
 print(list(reversed(l)))  # [5, 4, 3, 2, 1]
 
 # Multiplying strings
@@ -118,3 +118,4 @@ print("%s %s" % (a, b))  # abc def
 print(a, b)  # abc def
 print(a, b, sep='@')  # abc@def
 print(a, b, sep='@', end=',')  # abc@def,
+print(f"{a = } {b = }")  # a = 'abc' b = 'def'

@@ -124,42 +124,18 @@ t5 = tuple("abc")
 t1.count(1)  # returns the number of occurrences of 1
 t2.index(2)  # returns the index of the first occurrence of 2
 
-"""
-Dequeue
-
-dequeue is a double-ended queue
-"""
-from collections import deque
-
-d1 = deque()  # empty dequeue
-d2 = deque([1, 2, 3])  # dequeue with elements
-d3 = deque((1, 2, 3))  # dequeue with elements
-d4 = deque(range(1, 4))  # dequeue with elements
-
-# important methods of dequeue
-d1.append(1)  # adds 1 to the right of the dequeue
-d2.appendleft(1)  # adds 1 to the left of the dequeue
-d3.pop()  # removes the element at the right of the dequeue
-d4.popleft()  # removes the element at the left of the dequeue
-d1.extend([4, 5, 6])  # adds the elements [4, 5, 6] to the right of the dequeue
-d2.extendleft([4, 5, 6])  # adds the elements [4, 5, 6] to the left of the dequeue
-d3.rotate(1)  # rotates the dequeue by 1
-d4.rotate(-1)  # rotates the dequeue by -1
-_ = d1[0]  # returns the element at the left of the dequeue
-_ = d2[-1]  # returns the element at the right of the dequeue
-len(d3)  # returns the length of the dequeue
-
 
 """
 Heap
 
 heap is a binary tree where the value of each node is greater than or equal to the value of its children nodes
-
 heapq is a module that provides functions to work with heaps
 
 Python has a min-heap implementation
-To implement a max-heap, we can use the negative of the elements and then return the negative of the elements when we pop the elements from the heap
-
+To implement a max-heap, 
+we can use the negative of the elements and then 
+return the negative of the elements 
+when we pop the elements from the heap
 """
 import heapq
 
@@ -174,3 +150,4 @@ _ = h1[0]  # returns the smallest element of the heap
 len(h2)  # returns the length of the heap
 heapq.nlargest(2, h2)  # returns the 2 largest elements of the heap
 heapq.nsmallest(2, h2)  # returns the 2 smallest elements of the heap
+
