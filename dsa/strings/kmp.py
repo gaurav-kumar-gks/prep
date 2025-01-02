@@ -12,6 +12,7 @@ Other Applications:
 - Finding periodicity in a string.
 - Implementing a string-based automation.
 """
+
 from dsa.strings.prefixsuffix import longest_prefix_suffix
 
 
@@ -85,8 +86,9 @@ def smallest_period(s):
     lps = longest_prefix_suffix(s)
     n = len(s)
     if n % (n - lps[-1]) == 0:
-        return s[:n - lps[-1]]
+        return s[: n - lps[-1]]
     return s
+
 
 def min_chars_to_make_palindrome(s):
     r = s[::-1]  # Reverse of the string
@@ -94,4 +96,3 @@ def min_chars_to_make_palindrome(s):
     lps = longest_prefix_suffix(concat)
     longest_palindromic_prefix = lps[-1]
     return len(s) - longest_palindromic_prefix  # Minimum chars to add
-
