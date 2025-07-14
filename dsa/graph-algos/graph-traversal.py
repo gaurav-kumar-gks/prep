@@ -140,38 +140,41 @@ def bfs(s):
     # return shortest_distance[v]
 
 
-def dfs_iterative(s):
+def dfs_iterative(graph, s):
     """
     Time complexity: O(V + E)
     Space complexity: O(V)
     """
-    stack = [s]
-    visited = {s}
-    color = {s: "white"}
+    stack = [(s, None)]
+    color = {s: "gray"}  # Mark as gray when discovered
+    iscycle = False
     time = 0
-    start_time = {s: time}
-    end_time = {}
-
+    times = {s: (time, -1)}
+    
     while stack:
-        s = stack.pop()
-        color[s] = "gray"
-        time += 1
-
-        all_neighbors_visited = True
-        for i in graph[s]:
-            if color.get(i) == "white":
-                stack.append(i)
-                visited.add(i)
-                color[i] = "white"
-                time += 1
-                start_time[i] = time
-                all_neighbors_visited = False
-
-        if all_neighbors_visited:
-            color[s] = "black"
-            end_time[s] = time
-
-    return visited, start_time, end_time
+        current, par = stack[-1]
+        unvisited_neighbor = None
+        for neighbor in graph[current]:
+            if color.get(neighbor, "white") == "white":
+                unvisited_neighbor = neighbor
+            elif color.get(neighbor) == "gray" and neighbor != par:
+                iscycle = True
+        
+        if unvisited_neighbor:
+            # Process unvisited neighbor
+            time += 1
+            times[unvisited_neighbor] = (time, -1)
+            color[unvisited_neighbor] = "gray"
+            # visited.add(unvisited_neighbor)
+            stack.append((unvisited_neighbor, current))
+        else:
+            # All neighbors visited, backtrack
+            time += 1
+            times[current] = (times[current][0], time)
+            color[current] = "black"
+            stack.pop()
+    
+    return color, times
                 
 def dfs_recursive(s, visited = None):
     """

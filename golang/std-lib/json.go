@@ -1,9 +1,11 @@
 package stdlib
 
-/*
+
 import (
     "encoding/json"
     "fmt"
+    "os"
+    "strings"
 )
 
 type Person struct {
@@ -11,8 +13,8 @@ type Person struct {
     Age  int    `json:"age"`
 }
 
-JSON MARSHALING AND UNMARSHALING
-===============
+// JSON MARSHALING AND UNMARSHALING
+// ===============
 
 func main() {
     person := Person{
@@ -31,16 +33,16 @@ func main() {
     
     // Unmarshal from JSON
     jsonStr := `{"name":"Jane Doe","age":25}`
-    var person Person
-    err := json.Unmarshal([]byte(jsonStr), &person)
-    if err != nil {
-        fmt.Println("Error unmarshaling:", err)
+    var person1 Person
+    unmarshalerr := json.Unmarshal([]byte(jsonStr), &person1)
+    if unmarshalerr != nil {
+        fmt.Println("Error unmarshaling:", unmarshalerr)
         return
     }
 }
 
-JSON FILE HANDLING
-===============
+// JSON FILE HANDLING
+// ===============
 
 func LoadPersonFromFile(filename string) (*Person, error) {
     file, err := os.Open(filename)
@@ -71,26 +73,10 @@ func SavePersonToFile(person *Person, filename string) error {
 }
 
 
-JSON STREAMING
-===============
-Using json.Decoder and json.Encoder for streaming JSON:
-
-Example:
-```go
-import (
-    "encoding/json"
-    "fmt"
-    "os"
-    "strings"
-)
-
-// Person represents a person with name and age
-type Person struct {
-    Name string `json:"name"`
-    Age  int    `json:"age"`
-}
-
-func main() {
+// JSON STREAMING
+// ===============
+// Using json.Decoder and json.Encoder for streaming JSON:
+func JsonStreaming() {
     jsonStr := `{"name":"John","age":30}{"name":"Jane","age":25}{"name":"Bob","age":40}`
     
     reader := strings.NewReader(jsonStr)

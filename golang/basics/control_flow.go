@@ -81,6 +81,7 @@ OuterLoop:
 	for v := range ch {
 		fmt.Printf("Received: %d\n", v)
 	}
+	
 }
 
 func DemonstrateSwitch() {

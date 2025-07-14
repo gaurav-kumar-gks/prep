@@ -140,8 +140,8 @@ func (d *StatisticsDisplay) Display() {
 func ObserverDemo() {
 	weatherData := NewWeatherData()
 
-	currentDisplay := NewCurrentConditionsDisplay(weatherData)
-	statisticsDisplay := NewStatisticsDisplay(weatherData)
+	// currentDisplay := NewCurrentConditionsDisplay(weatherData)
+	// statisticsDisplay := NewStatisticsDisplay(weatherData)
 
 	fmt.Println("--- Weather Station Demo ---")
 	weatherData.SetMeasurements(80, 65, 30.4)

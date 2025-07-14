@@ -1,76 +1,115 @@
 """
-Single source shortest path algorithms
+shortest path algorithms
 """
+
+from collections import deque
+
+"""
+Undirected graph
+
+- BFS
+- O(V+E)
+"""
+def undirected_graph_shortest_path(graph, s, n):
+    q = deque([s])
+    dist = [-1] * n
+    dist[s] = 0
+    while q:
+        n = q.popleft()
+        for ne in graph[n]:
+            if dist[ne] == -1:
+                dist[ne] = dist[n] + 1
+                q.append(ne)
+                
+    return -1
+
+"""
+Using toposort
+- DAG
+- O(V+E)
+"""
+
+def toposort(graph, n):
+    res = []
+    vis = set()
+    def dfs(node):
+        vis.add(node)
+        for ne, _ in graph[node]:
+            if ne not in vis:
+                dfs(ne)
+        res.append(node)
+    
+    for i in range(n):
+        if i not in vis:
+            dfs(i)
+    
+    topo = res[::-1]
+    
+    dis = [float('inf')] * n
+    start = 0
+    dis[start] = 0
+    
+    for node in topo:
+        for ne, w in graph[node]:
+            if dis[ne] > dis[node] + w:
+                dis[ne] = dis[node] + w
+    print(dis)
+        
 
 """
 Dijkstra's Algorithm
-
-Algorithm:
-1. Initialize distances of all vertices as infinite.
-2. Create an empty set.  We will use this set to keep track of vertices included in shortest path tree.
-3. Assign distance value to the source vertex as 0 so that it is picked first.
-4. While the set doesn't include all vertices:
-    a. Pick a vertex u which is not in the set and has minimum distance value.
-    b. Include u to the set.
-    c. Update distance value of all adjacent vertices of u.  
-    To update the distance values, iterate through all adjacent vertices. 
-    For every adjacent vertex v, 
-    if the sum of distance value of u (from source) and weight of edge u-v, 
-    is less than the distance value of v, then update the distance value of v.
-
-in general T.C. = O(E + V log V) with min heap
-and T.C. = O(E + V^2) with adjacency matrix
-
+- doesn't work for negative weight cycle
+- O((V+E)logV)
 """
 
 import heapq
 
-def dijkstra_sparse_graphs(graph, start):
-    distances = {node: float('infinity') for node in graph}
-    previous_nodes = {node: None for node in graph}
-    distances[start] = 0
-    queue = [(0, start)]
+def dijkstra(graph, n, start):
+    dis = [float('inf')] * n
+    pq = [(0, start)]
+    pars = {start: None}
+    dis[start] = 0
+    while pq:
+        d, n = heapq.heappop(pq)
+        if d > dis[n]: continue
+        for w, ne in graph[n]:
+            if dis[ne] > d + w:
+                dis[ne] = d + w
+                pars[ne] = n
+                heapq.heappush(pq, (dis[ne], ne))
 
-    while queue:
-        current_distance, current_node = heapq.heappop(queue)
+"""
+Bellman ford
+- works for negative cycles
+- O(VE)
+"""
 
-        if current_distance > distances[current_node]:
-            continue
+def bellman_ford(edges, n, start):
+    dist = [float('inf')] * n
+    dist[start] = 0
 
-        for neighbor, weight in graph[current_node].items():
-            distance = current_distance + weight
+    for _ in range(n - 1):
+        for u, v, w in edges:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
 
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                previous_nodes[neighbor] = current_node
-                heapq.heappush(queue, (distance, neighbor))
-
-    return distances, previous_nodes
-
-from typing import List, Optional
-
-def dijkstra(graph: List[List[int]], src: int) -> List:
-    V = len(graph)
-    dist = [float('inf')] * V
-    dist[src] = 0
-    visited = [False] * V
-
-    for _ in range(V):
-        min_dist = float('inf')
-        min_index = -1
-        for i in range(V):
-            if not visited[i] and dist[i] < min_dist:
-                min_dist = dist[i]
-                min_index = i
-        
-        if min_index == -1:
-            break
-        
-        visited[min_index] = True
-
-        for v, weight in enumerate(graph[min_index]):
-            if weight > 0 and not visited[v] and dist[v] > dist[min_index] + weight:
-                dist[v] = dist[min_index] + weight
+    # Check for negative-weight cycle
+    for u, v, w in edges:
+        if dist[u] + w < dist[v]:
+            raise ValueError("Graph contains negative weight cycle")
 
     return dist
 
+def floyd_warshall(graph, n):
+    dist = [[float('inf')] * n for _ in range(n)]
+    for u in range(n):
+        dist[u][u] = 0
+    for u in range(n):
+        for v, w in graph[u]:
+            dist[u][v] = w
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+    return dist

@@ -1,4 +1,4 @@
-package testing
+package gotesting
 
 /*
 Advanced Testing Techniques
