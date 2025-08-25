@@ -1,5 +1,5 @@
 """
-Sliding window
+SLIDING WINDOW
 """
 
 """

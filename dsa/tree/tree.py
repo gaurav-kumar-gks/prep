@@ -1,3 +1,55 @@
+"""
+TREE
+"""
+
+"""
+TREE TERMINOLOGY:
+    - Root: Topmost node of the tree
+    - Parent: Node that has children
+    - Child: Node connected to a parent
+    - Leaf: Node with no children
+    - Internal Node: Node with at least one child
+    - Sibling: Nodes with the same parent
+    - Ancestor: All nodes on path from root to current node
+    - Descendant: All nodes in subtree rooted at current node
+    - Height: Length of longest path from root to leaf
+    - Depth: Length of path from root to specific node
+    - Degree: Number of children a node has
+
+
+    BALANCED TREE
+        - Height difference between left and right subtrees is limited
+        - Examples: AVL Tree, Red-Black Tree, B-Tree
+        - Advantages: Guaranteed O(log n) operations
+        - Applications: Database indexing, File systems
+        
+    UNBALANCED TREE
+        - No height restrictions
+        - Can degenerate to linked list (height = n)
+        - Disadvantages: O(n) worst-case operations
+
+    COMPLETE TREE
+        - All levels are filled except possibly the last level
+        - Last level has all nodes as far left as possible
+        - Used in: Heap, Priority Queue
+
+    PERFECT TREE
+        - All internal nodes have exactly 2 children
+        - All leaves are at the same level
+        - Used in: BST, AVL Tree
+
+    BINARY TREE
+        - Each node has at most 2 children (left and right)
+        - Used in: BST, AVL, Red-Black trees, Heaps
+        
+    TERNARY TREE
+        - Each node has at most 3 children
+        - Used in: Some search algorithms, Game trees
+        
+    N-ARY TREE (GENERAL TREE)
+        - Each node can have any number of children
+        - Used in: File systems, Organization charts, XML/HTML DOM
+"""
 class TreeNode:
     def __init__(self, val):
         self.val = val
@@ -44,7 +96,6 @@ class TreeNode:
             curr = stack.pop()
             result.append(curr.val)
             curr = curr.right
-
         return result
 
 
@@ -90,7 +141,6 @@ class TreeNode:
                 stack.append(curr.right)
             if curr.left:
                 stack.append(curr.left)
-
         return result
     
     
@@ -174,6 +224,13 @@ class TreeNode:
                 if node.right:
                     queue.append(node.right)
             result.append(level)
+        
+        # import deque
+        # q, result = deque([root]) if root else [], []
+        # while q:
+        #     node = q.popleft()
+        #     result.append((node := q.popleft()).val)
+        #     q.extend([kid for kid in (node.left, node.right) if kid])
         return result
     
 
@@ -207,3 +264,59 @@ class TreeNode:
                     pre.right = None
                     res.append(self.val)
                     self = self.right
+
+"""
+Different Trees
+
+    1. BINARY SEARCH TREE (BST)
+        - Left subtree < Root < Right subtree
+        - Inorder traversal gives sorted order
+        - Applications: Symbol tables, Database indexing
+        - Time Complexity: O(log n) average, O(n) worst case
+        
+    2. HEAP
+        - Complete binary tree with heap property
+        - Max Heap: Parent >= Children
+        - Min Heap: Parent <= Children
+        - Applications: Priority queues, Heap sort
+        - Time Complexity: O(log n) for insert/delete, O(1) for max/min
+        
+    3. AVL TREE
+        - Self-balancing BST
+        - Height difference between subtrees ≤ 1
+        - Rotations maintain balance
+        - Applications: Database systems, Real-time systems
+        - Time Complexity: O(log n) guaranteed
+        
+    4. RED-BLACK TREE
+        - Self-balancing BST with color properties
+        - Root is black, red nodes have black children
+        - Black height is same for all paths
+        - Applications: C++ STL map/set, Java TreeMap/TreeSet
+        - Time Complexity: O(log n) guaranteed
+        
+    5. SEGMENT TREE
+        - Tree for range queries on arrays
+        - Each node represents a segment/interval
+        - Supports range sum, min, max, etc.
+        - Applications: Range queries, Competitive programming
+        - Time Complexity: O(log n) for queries and updates
+        
+    6. FENWICK TREE (BINARY INDEXED TREE)
+        - Efficient prefix sum queries
+        - Uses bit manipulation for indexing
+        - Applications: Range sum queries, Inversion counting
+        - Time Complexity: O(log n) for queries and updates
+        
+    7. SUFFIX TREE
+        - Compressed trie of all suffixes of a string
+        - Used for string pattern matching
+        - Applications: DNA sequence analysis, Text indexing
+        - Time Complexity: O(n) construction, O(m) pattern search
+        
+    8. TRIE (PREFIX TREE)
+        - Tree for storing strings
+        - Common prefixes are shared
+        - Applications: Auto-complete, Spell checking, IP routing
+        - Time Complexity: O(m) for search/insert where m is string length
+"""

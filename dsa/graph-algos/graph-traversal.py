@@ -1,17 +1,28 @@
 """
-Graphs
-"""
-from collections import deque
-
-"""
-Representations
+GRAPH
 """
 
 """
-Adjacency Matrix
+Types of Graphs
+
+- Directed / Undirected
+- Weighted / Unweighted
+- Cyclic / Acyclic (Tree)
+- Complete graph: A graph in which there is an edge between every pair of vertices
+- Bipartite graph: A graph whose vertices can be divided into two disjoint sets such that every edge connects two vertices from different sets.
+- Sparse graph: A graph in which the number of edges is much less than the number of vertices
+
+Types of Edges
+- Tree edge: An edge in a DFS tree
+- Back edge: An edge that connects a vertex to an ancestor in a DFS tree
+- Forward edge: An edge that connects a vertex to a descendant in a DFS tree
+- Cross edge: An edge that connects a vertex to a node that is neither an ancestor nor a descendant in a DFS tree
+
+Types of Representation
+
+1. Adjacency Matrix
 
 e.g. 
-
     A B C
 A   0 1 1
 B   1 0 0
@@ -25,7 +36,6 @@ Cons:
     - Adding a new vertex requires creating a new row and a new column
     - Adding a new edge requires updating two entries
     - Determining whether there is an edge between two vertices requires looking up two entries
-"""
 
 class GraphMatrix:
     def __init__(self, num_of_vertices):
@@ -36,18 +46,10 @@ class GraphMatrix:
         self.matrix[u][v] = 1
         self.matrix[v][u] = 1  # For undirected graph
 
-    def print_graph(self):
-        for i in range(self.num_of_vertices):
-            for j in range(self.num_of_vertices):
-                print(self.matrix[i][j], end=" ")
-            print()
 
-
-"""
-Adjacency List
+2. Adjacency List
 
 e.g.
-
 A -> B -> C
 B -> A
 C -> A
@@ -60,22 +62,6 @@ Pros:
 
 Cons:
     - Determining whether there is an edge between two vertices requires iterating over the list
-"""
-
-
-class GraphList:
-    def __init__(self, num_of_vertices):
-        self.adj_list = [[] for _ in range(num_of_vertices)]
-        self.num_of_vertices = num_of_vertices
-
-    def add_edge(self, u, v):
-        self.adj_list[u].append(v)
-        self.adj_list[v].append(u)  # For undirected graph
-
-    def print_graph(self):
-        for i in range(self.num_of_vertices):
-            print(f"{i} -> {' -> '.join(map(str, self.adj_list[i]))}")
-
 
 class GraphDict:
     def __init__(self):
@@ -86,24 +72,12 @@ class GraphDict:
             self.graph[u] = [v]
         else:
             self.graph[u].append(v)
-        
-        # For undirected graph
-        if v not in self.graph:
-            self.graph[v] = [u]
-        else:
-            self.graph[v].append(u)
+"""
 
-    def print_graph(self):
-        for node in self.graph:
-            print(f"{node} -> {' -> '.join(map(str, self.graph[node]))}")
-            
-    def __getitem__(self, node):
-        return self.graph[node]
-
-graph = GraphDict()
-graph.add_edge(0, 1)
-graph.add_edge(0, 2)
-
+"""
+BFS & DFS
+"""
+from collections import deque
 
 def bfs(s):
     """
@@ -140,7 +114,7 @@ def bfs(s):
     # return shortest_distance[v]
 
 
-def dfs_iterative(graph, s):
+def dfs(graph, s):
     """
     Time complexity: O(V + E)
     Space complexity: O(V)
@@ -189,82 +163,19 @@ def dfs_recursive(s, visited = None):
         if i not in visited:
             dfs_recursive(i, visited)
 
-
 """
-Types of Graphs
-
-- Directed graph: A graph in which all the edges are directed.
-- Undirected graph: A graph in which all the edges are undirected.
-
-- Weighted graph: A graph in which all the edges have weights.
-- Unweighted graph: A graph in which all the edges have no weights.
-
-- Cyclic graph: A graph that has at least one cycle.
-- Acyclic graph: A graph that has no cycles.
-
-- Connected graph: A graph in which there is a path between every pair of vertices
-- Disconnected graph: A graph in which there is no path between at least one pair of vertices
-
-- Complete graph: A graph in which there is an edge between every pair of vertices
-- Incomplete graph: A graph in which there is no edge between at least one pair of vertices
-
-- Bipartite graph: A graph whose vertices can be divided into two disjoint sets such that every edge connects two vertices from different sets.
-- Non-bipartite graph: A graph that is not bipartite.
-
-- Sparse graph: A graph in which the number of edges is much less than the number of vertices
-- Dense graph: A graph in which the number of edges is close to the number of vertices squared
-
-- Tree: A connected, undirected, acyclic graph
-- Forest: A collection of trees
-"""
-
-
-"""
-Types of Edges
-
-- Tree edge: An edge in a DFS tree
-- Back edge: An edge that connects a vertex to an ancestor in a DFS tree
-- Forward edge: An edge that connects a vertex to a descendant in a DFS tree
-- Cross edge: An edge that connects a vertex to a node that is neither an ancestor nor a descendant in a DFS tree
-
-consider the following graph:
-
-
-    A -> B -> C
-    |    |    |
-    v    v    v
-    D -> E -> F
-    |    |    |
-    v    v    v
-    G -> H -> I
-    
-The edges in the graph are as follows:
-
-- Tree edges: A -> B, B -> C, B -> E, D -> E, E -> F, D -> G, G -> H, H -> I
-- Back edges: E -> B, G -> D, H -> G, I -> H
-- Forward edges: B -> D, C -> F, E -> H, F -> I
-- Cross edges: A -> C, A -> F, A -> I, D -> F, D -> I, G -> I
+A connected component of an undirected graph is a subgraph in which 
+every two vertices are connected to each other by a path(s), 
+and which is connected to no other vertices outside the subgraph.
 """
 
 """
+Finding Connected Components: DFS or BFS
 
-Shortest Path Algorithms: Understand Dijkstra's algorithm, Bellman-Ford algorithm, and Floyd-Warshall algorithm. Know when to use each one and their time complexities.
+Start from any node and do BFS / DFS, maintain a visited set. 
+All nodes visited in this iteration form a connected component.    
+Then just check for the other unvisited set and run DFS / BFS again. 
+And so on, until all the nodes are visited.
 
-Minimum Spanning Tree Algorithms: Understand Prim's and Kruskal's algorithms.
-
-Topological Sorting: This is especially important for problems involving scheduling and determining dependencies.
-
-Strongly Connected Components: Understand Tarjan’s algorithm and Kosaraju's algorithm.
-
-Network Flow: Understand the Ford-Fulkerson algorithm and the concept of maximum flow.
-
-Graph Coloring and Bipartite Checking: These are useful for problems involving scheduling and partitioning.
-
-Cycle Detection: Be able to detect cycles in both directed and undirected graphs.
-
-Articulation Points and Bridges: Understand how to find articulation points and bridges in a graph.
-
-Graph Isomorphism and Matching: Understand the concepts, though detailed algorithms are less frequently asked.
-
-Advanced Topics: Depending on the role, you might also need to understand more advanced topics like Eulerian paths and circuits, Hamiltonian cycles, Planar graphs, etc.
+O(n + m)
 """

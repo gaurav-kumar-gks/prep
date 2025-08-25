@@ -1,5 +1,5 @@
 """
-2 pointers
+TWO POINTERS
 """
 
 """

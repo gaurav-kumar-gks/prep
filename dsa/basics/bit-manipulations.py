@@ -1,3 +1,7 @@
+"""
+BIT MANIPULATIONS
+"""
+
 # all bit manipulation tricks from https://leetcode.com/discuss/study-guide/4282051/All-Types-of-Patterns-for-Bits-Manipulations-and-How-to-use-it
 
 def print_binary(n):

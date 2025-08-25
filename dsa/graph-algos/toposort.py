@@ -1,6 +1,8 @@
 """
-Topological sort
+GRAPH: TOPOLOGICAL SORT
+"""
 
+"""
 Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices 
 such that for every directed edge u -> v, vertex u comes before v in the ordering. 
 
@@ -19,40 +21,37 @@ from collections import deque, defaultdict
 
 def topological_sort_dfs(graph, n):
     """doesn't have cycle detection"""
-    
     res = []
     vis = set()
-    
     def dfs(node):
-        vis.add(node)
-        for ne in graph[node]:
-            if ne not in vis:
-                dfs(ne) 
+        for nei in graph[node]:
+            if nei not in vis:
+                vis.add(nei)
+                dfs(nei)
         res.append(node)
     
-    for i in range(n):
-        if i not in vis:
-            dfs(i)
+    for node in range(n):
+        if node not in vis:
+            vis.add(node)
+            dfs(node)
     return res[::-1]
 
 
-def topological_sort_bfs(lis, n):
+def topological_sort_bfs(edges, n):
     """has cycle detection"""
-    graph = defaultdict(list)
-    ind = [0] * n
-    for u, v in lis:
-        graph[u].append(v)
-        ind[v] += 1
-    
-    q = deque([i for i in range(n) if ind[i] == 0])
     res = []
-    
+    inorder = [0] * n
+    graph = defaultdict(list)
+    for u, v in edges:
+        graph[u].append(v)
+        inorder[v] += 1
+
+    q = deque(list(filter(lambda x: inorder[x] == 0, range(n))))
     while q:
-        u = q.popleft()
-        res.append(u)
-        for v in graph[u]:
-            ind[v] -= 1
-            if ind[v] == 0:
-                q.append(v)
-    
+        node = q.popleft()
+        for nei in graph[node]:
+            inorder[nei] -= 1
+            res.append(nei)
+            if not inorder[nei]:
+                q.append(nei)
     return res[::-1] if len(res) == n else []

@@ -1,4 +1,61 @@
+"""
+Z-ALGORITHM - COMPREHENSIVE THEORY & IMPLEMENTATION
+
+The Z-Algorithm is a linear time pattern matching algorithm that finds all occurrences
+of a pattern in a text in O(n + m) time, where n is the length of the text and m is
+the length of the pattern. It also has applications in string processing and pattern matching.
+
+================================================================================
+THEORY & CONCEPTS
+================================================================================
+
+1. Z-ARRAY DEFINITION:
+   - Z[i] = length of longest substring starting at i that matches prefix of string
+   - Z[0] is typically undefined or set to length of string
+   - Z[i] = max k such that s[0...k-1] = s[i...i+k-1]
+
+2. Z-ALGORITHM PROPERTIES:
+   - Linear time complexity: O(n)
+   - Space complexity: O(n)
+   - Works for any string (not just patterns)
+   - Can be used for pattern matching, palindrome detection, etc.
+
+3. APPLICATIONS:
+   - Pattern matching in text
+   - Finding longest palindromic prefix
+   - Finding string period
+   - Counting distinct substrings
+   - String compression
+   - Bioinformatics (DNA sequence analysis)
+
+4. ALGORITHM INTUITION:
+   - Maintain a window [L, R] where we have already computed Z values
+   - Use previously computed Z values to avoid redundant comparisons
+   - Expand window when necessary
+
+5. TIME COMPLEXITIES:
+   - Z-array construction: O(n)
+   - Pattern matching: O(n + m)
+   - Palindrome detection: O(n)
+   - Period finding: O(n)
+
+================================================================================
+IMPLEMENTATION
+================================================================================
+"""
+
 def get_z_array_naive(s):
+    """
+    Naive implementation of Z-array construction.
+    
+    Algorithm:
+    1. For each position i, compare with prefix
+    2. Count matching characters
+    3. Store count in Z[i]
+    
+    Time Complexity: O(n²)
+    Space Complexity: O(n)
+    """
     n = len(s)
     z = [0] * n
     for i in range(1, n):

@@ -72,7 +72,7 @@ Unique observation: The array is almost sorted, so the element to be inserted is
 """
 
 
-def insertion_sor(arr):
+def insertion_sort(arr):
     """Insertion sort"""
     n = len(arr)
     for i in range(1, n):
@@ -228,3 +228,48 @@ def dutch_national_flag_algorithm(arr):
             arr[mid], arr[high] = arr[high], arr[mid]
             high -= 1
     return arr
+
+
+"""
+QuickSelect
+
+Time Complexity: O(n) average case, O(n^2) worst case
+Space Complexity: O(1) iterative, O(logn) recursive
+Inplace: Yes
+Stable: No
+
+What: Find the k-th smallest element in an unsorted array
+How: Use partitioning similar to QuickSort but only recurse on one side
+Idea: If pivot is at position k, we found the answer. If k < pivot position, search left. If k > pivot position, search right.
+Applications: Find median, k-th largest/smallest, top-k elements
+"""
+
+
+def quickselect(arr, k):
+    """
+    Time Complexity: O(n) average, O(n^2) worst case
+    Space Complexity: O(1)
+    """
+    def partition(arr, left, right):
+        pivot = arr[right]
+        i = left
+        for j in range(left, right):
+            if arr[j] < pivot:
+                arr[i], arr[j] = arr[j], arr[i]
+                i += 1
+        arr[i], arr[right] = arr[right], arr[i]
+        return i
+    
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:
+        pivot_index = partition(arr, left, right)
+        
+        if k == pivot_index:
+            return arr[k]
+        elif k < pivot_index:
+            right = pivot_index - 1
+        else:
+            left = pivot_index + 1
+    
+    return arr[k]
