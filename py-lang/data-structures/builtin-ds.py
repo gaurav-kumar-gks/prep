@@ -151,3 +151,15 @@ len(h2)  # returns the length of the heap
 heapq.nlargest(2, h2)  # returns the 2 largest elements of the heap
 heapq.nsmallest(2, h2)  # returns the 2 smallest elements of the heap
 
+# Custom Min Heap for Objects
+class Word:
+    def __init__(self, word):
+        self.word = word
+    def __lt__(self, other):
+        return len(self.word) < len(other.word)
+
+words = [Word("apple"), Word("banana"), Word("cherry")]
+heapq.heapify(words)
+print(heapq.heappop(words).word) # apple
+print(heapq.heappop(words).word) # banana
+print(heapq.heappop(words).word) # cherry
