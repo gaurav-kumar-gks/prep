@@ -31,13 +31,6 @@ gcd(a,b)
 Time complexity: O(log(min(a,b)))
 """
 
-
-def gcd_recursive(a, b):
-    if b == 0:
-        return a
-    return gcd_recursive(b, a % b)
-
-
 def gcd(a, b):
     while b:
         a, b = b, a % b
@@ -50,9 +43,7 @@ def lcm(a, b):
 Extended euclidean algo
 
 ax + by = gcd(a, b)
-Let's say we find gcd(a,b) = gcd(b, a%b) = gcd
-ax + by = gcd(a, b)
-bx1 + (a%b)y1 = gcd(b, a%b) = gcd(a, b) = ax + by
+gcd(b, a%b) = gcd(a, b)
 bx1 + (a - (a//b * b))y1 = ax + by
 ay1 + b(x1 - (a//b * y1)) = ax + by
 x = y1
@@ -73,9 +64,8 @@ def extended_gcd_recursive(a, b):
 def extended_gcd(a, b):
     x, y = 1, 0
     while b > 0:
-        q = a // b
+        x, y = y, x - (a // b) * y
         a, b = b, a % b
-        x, y = y, x - q * y
     return a, x, y
 
 

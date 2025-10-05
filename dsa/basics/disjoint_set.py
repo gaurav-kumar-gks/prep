@@ -81,10 +81,11 @@ class DisjointSet:
             return
         if self.rank[root_x] < self.rank[root_y]:
             self.parent[root_x] = root_y
+        elif self.rank[root_y] < self.rank[root_x]:
+            self.parent[root_y] = root_x
         else:
             self.parent[root_y] = root_x
-            if self.rank[root_x] == self.rank[root_y]:
-                self.rank[root_x] += 1
+            self.rank[root_x] += 1
         self.count -= 1  # Decrease number of sets
 
 """

@@ -14,19 +14,12 @@ i.e. a*(b*c) = (a*b)*c
 
 a^n
 = 1 if n==0
-= a * (a^(n-1/2))^2 if n is odd
-= (a^(n/2))^2 if n is even
+= a * (a**a)^(n-1/2) if n is odd
+= (a**a)^(n/2) if n is even
 
 Note: if mod is prime
 then (a^n) == (a^(n%(m-1))
 """
-
-def binary_exponentiation_recursive(a, n):
-    if n == 0: 
-        return 1
-    if a & 1:
-        return a * binary_exponentiation_recursive(a*a, n//2)
-    return binary_exponentiation_recursive(a*a, n//2)
 
 def binary_exponentiation(a, n, mod):
     a %= mod

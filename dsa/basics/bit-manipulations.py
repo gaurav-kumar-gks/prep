@@ -22,6 +22,7 @@ while n:
     count += n & 1
     n >>= 1
 
+-n = ~n + 1
 
 Find the rightmost set bit
 n & -n
@@ -48,10 +49,10 @@ Toggle the ith bit
 n ^ (1 << i)
 
 Check if a number is power of 2
-n and !(n & n-1)
+n and not(n & (n-1))
 
 Check if a number is power of 4
-not (n & (n - 1)) and (n % 3 == 1);
+not (n & (n - 1)) and (n % 3 == 1)
 
 Check if a number is power of 3
 n and (pow(3, 19) % n == 0) # 3^19 is the maximum power of 3 that can be stored in 32-bit integer

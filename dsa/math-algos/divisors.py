@@ -31,70 +31,52 @@ from typing import List, Tuple, Dict
 from collections import defaultdict
 
 
-def get_prime_factors(n: int) -> Dict[int, int]:
+def get_prime_factors(n):
     """
     Get prime factorization of n
-    
     Returns: Dictionary {prime: exponent}
     Example: 12 = 2^2 * 3^1 -> {2: 2, 3: 1}
-    
     Time Complexity: O(√n)
     Space Complexity: O(log n)
     """
-    factors = {}
-    
-    # Handle 2 separately
+    factors = defaultdict(int)
     while n % 2 == 0:
-        factors[2] = factors.get(2, 0) + 1
+        factors[2] += 1
         n //= 2
-    
-    # Check odd numbers up to √n
     for i in range(3, int(math.sqrt(n)) + 1, 2):
         while n % i == 0:
-            factors[i] = factors.get(i, 0) + 1
+            factors[i] += 1
             n //= i
-    
-    # If n > 1, n is prime
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
-    
+        factors[n] += 1
     return factors
 
-
-def get_all_divisors(n: int) -> List[int]:
+def get_all_divisors(n):
     """
     Get all divisors of n (including 1 and n)
-    
-    Algorithm:
     1. Find prime factorization
     2. Generate all combinations of prime factors
-    3. Sort and return
-    
     Time Complexity: O(√n + d log d) where d = number of divisors
     Space Complexity: O(d)
     """
-    if n == 0:
-        return []
-    if n == 1:
-        return [1]
+    if n <= 1:
+        return [n] * n
     
     factors = get_prime_factors(abs(n))
     divisors = [1]
     
     def generate_divisors(prime_factors, current_divisor=1, index=0):
         if index == len(prime_factors):
-            if current_divisor not in divisors:
+            if current_divisor != 1:
                 divisors.append(current_divisor)
             return
-        
         prime, max_exp = prime_factors[index]
         for exp in range(max_exp + 1):
             generate_divisors(prime_factors, current_divisor * (prime ** exp), index + 1)
     
     prime_list = list(factors.items())
     generate_divisors(prime_list)
-    
-    return sorted(divisors)
+    return divisors
 
 def count_divisors_sieve(n: int) -> List[int]:
     """
@@ -105,13 +87,22 @@ def count_divisors_sieve(n: int) -> List[int]:
     """
     count_divisors = [1] * (n + 1)
     count_divisors[0] = 0
-    
     for i in range(2, n + 1):
         for j in range(i, n + 1, i):
             count_divisors[j] += 1
-    
     return count_divisors
 
+def count_factors_of_prime(n, p):
+    """
+    Count how many times prime p appears in n!
+    Legendre's formula: n/p + n/p**2 + n/p**3 + ...
+    """
+    count = 0
+    power = p
+    while power <= n:
+        count += n // power
+        power *= p
+    return count
 
 def euler_totient_sieve(n: int) -> List[int]:
     """
@@ -130,14 +121,3 @@ def euler_totient_sieve(n: int) -> List[int]:
                 phi[j] = phi[j] // i * (i - 1)
     
     return phi
-
-
-
-"""
-| Algorithm              | Time Complexity | Space Complexity | Best For        |
-|------------------------|----------------|------------------|-----------------|
-| Trial Division         | O(√n)          | O(1)             | Single numbers  |
-| Sieve Methods          | O(n log n)     | O(n)             | Range queries   |
-| Prime Factorization    | O(√n)          | O(log n)         | Multi-purpose   |
-| Euler Totient          | O(√n)          | O(1)             | Coprime counts  |
-"""

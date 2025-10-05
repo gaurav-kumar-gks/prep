@@ -20,19 +20,11 @@ def boyer_moore_majority_vote(arr):
     
     candidate = arr[0]
     count = 1
-    
     for i in range(1, len(arr)):
-        if arr[i] == candidate:
-            count += 1
-        else:
-            count -= 1
-            if count == 0:
-                candidate, count = arr[i], 1
-    
+        count += 1 if arr[i] == candidate else -1
+        if not count:
+            candidate, count = arr[i], 1
     return candidate if sum(1 for x in arr if x == candidate) > len(arr) // 2 else None
-
-
-
 
 
 def boyer_moore_majority_vote_generalized(arr, k):
@@ -44,7 +36,6 @@ def boyer_moore_majority_vote_generalized(arr, k):
     """
     if not arr or k <= 1:
         return []
-    
     candidates = {}
     for element in arr:
         if element in candidates:
@@ -53,6 +44,5 @@ def boyer_moore_majority_vote_generalized(arr, k):
             candidates[element] = 1
         else:
             candidates = {key: count - 1 for key, count in candidates.items() if count > 1}
-    
-    return [candidate for candidate in candidates if sum(1 for x in arr if x == candidate) > len(arr) // k]
+    return [candidate for candidate in candidates if arr.count(candidate) > len(arr) // k]
 

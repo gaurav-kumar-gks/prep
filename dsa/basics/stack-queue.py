@@ -17,29 +17,37 @@ import collections
 
 
 def increasing_queue(A):
+    # e.g. q = [1 2 3] cur = 2
+    # nse of 3 would be 2
+    # valid q after removing invalids: 1 2 
+    # so pse of 2 would be 1
     queue = collections.deque()
-    l = [-1]*len(A)
-    r = [-1]*len(A)
+    pse = [-1]*len(A)
+    nse = [-1]*len(A)
     for i, v in enumerate(A):
         while queue and A[queue[-1]] >= v:
-            r[queue.pop()] = v
+            nse[queue.pop()] = v
         if queue:
-            l[i] = A[queue[-1]]
+            pse[i] = A[queue[-1]]
         queue.append(i)
-    return l, r
+    return pse, nse
 
 
 def decreasing_queue(A):
+    # e.g. q = [5, 4, 2] cur = 3
+    # nge of 2 would be 3
+    # valid q after removing invalids q = [5, 4, 3]
+    # pge of 3 would be 4
     queue = collections.deque()
-    l = [-1]*len(A)
-    r = [-1]*len(A)
+    nge = [-1]*len(A)
+    pge = [-1]*len(A)
     for i, v in enumerate(A):
         while queue and A[queue[-1]] <= v:
-            r[queue.pop()] = v
+            nge[queue.pop()] = v
         if queue:
-            l[i] = A[queue[-1]]
+            pge[i] = A[queue[-1]]
         queue.append(i)
-    return l, r
+    return pge, nge
 
 
 

@@ -3,24 +3,11 @@ TWO POINTERS
 """
 
 """
-Does my problem match this pattern? ->
-
-Yes, if all of these conditions are fulfilled: ->
-1) The input data can be traversed in a linear fashion, that is, it’s in an array, in a linked list, or in a string of characters.
-2) The input data is sorted, or else, arranged in a way that is relevant to the problem, such as numeric data sorted in ascending or descending order, or characters arranged symmetrically.
-
-No, if either of these conditions is fulfilled: ->
-1) The input data cannot be traversed in a linear fashion, that is, it’s neither in an array, nor in a linked list, nor in a string of characters.
-2) The problem requires an exhaustive search of the solution space, that is, eliminating one solution does not eliminate any others.
-"""
-
-"""
 Characteristics of problem that can be solved by two-pointer pattern:
 
 note: the key here is the sub-problem that we are considering, according to that the below two statements may vary
-If a wider scope of the sliding window is valid, the narrower scope of that wider scope is valid must hold.
-If a narrower scope of the sliding window is invalid, the wider scope of that narrower scope is invalid must hold.
-
+If a wider scope of the window is valid, the narrower scope of that wider scope is valid must hold.
+If a narrower scope of the window is invalid, the wider scope of that narrower scope is invalid must hold.
 """
 
 

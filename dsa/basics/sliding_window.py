@@ -3,21 +3,14 @@ SLIDING WINDOW
 """
 
 """
-The sliding window pattern is method aimed at reducing the use of nested loops in an algorithm. 
-It’s a variation of the two pointers pattern, where the pointers can be used to set window bounds.
-
+Variation of the two pointers pattern, where the pointers can be used to set window bounds.
 A window is a sublist formed over a part of an iterable data structure. 
 It can be used to slide over the data in chunks corresponding to the window size. 
 The sliding window pattern allows us to process the data in segments instead of the entire list. 
-The segment or window size can be set according to the problem’s requirements
-
-
 """
 
 """
-Does my problem match this pattern?
-
-Yes, if both these conditions are fulfilled: ->
+Check if these conditions are fulfilled:
 
 1) The problem requires repeated computations on a contiguous set of data elements (a subarray or a substring), 
 such that the window moves across the input array from one end to the other. 
